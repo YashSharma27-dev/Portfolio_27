@@ -1,25 +1,11 @@
 services:
-  # 1. Backend Service
+  # Monolithic Service (Frontend + Backend)
   - type: web
-    name: me-api-backend
+    name: me-api-portfolio
     env: node
     plan: free
-    buildCommand: npm install && npm install --prefix backend
+    buildCommand: npm install && npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend
     startCommand: node backend/server.js
     envVars:
       - key: PORT
         value: 10000
-
-  # 2. Frontend Static Site
-  - type: static
-    name: me-api-frontend
-    env: static
-    plan: free
-    buildCommand: npm install && npm run build --prefix frontend
-    publishDir: frontend/dist
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: me-api-backend
-          property: url

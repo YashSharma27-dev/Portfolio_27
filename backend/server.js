@@ -3,11 +3,17 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./database');
 
+const path = require('path');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// Serve static files from the React frontend app
+const frontendPath = path.join(__dirname, '../frontend/dist');
+app.use(express.static(frontendPath));
 
 // Helper for database queries
 const query = (sql, params = []) => {
@@ -18,6 +24,7 @@ const query = (sql, params = []) => {
         });
     });
 };
+
 
 const runPromise = (sql, params = []) => {
     return new Promise((resolve, reject) => {
@@ -160,6 +167,11 @@ app.get('/search', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 app.listen(PORT, () => {
