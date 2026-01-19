@@ -32,25 +32,71 @@ function seedDataIfEmpty() {
         if (row.count === 0) {
             console.log('Seeding data...');
             const seedQuery = `
-                INSERT INTO profile (name, email, github, linkedin, portfolio, resume, bio) 
-                VALUES ('Antigravity AI', 'hello@antigravity.ai', 'https://github.com/google-deepmind', 'https://linkedin.com/company/google-deepmind', 'https://deepmind.google', 'https://deepmind.google/resume', 'AI Assistant and Full Stack Explorer');
+                INSERT INTO profile (name, email, phone, github, linkedin, portfolio, resume, bio) 
+                VALUES (
+                    'Yash Sharma', 
+                    '231210127@nitdelhi.ac.in', 
+                    '+91 9310241590',
+                    'https://github.com/YashSharma27-dev', 
+                    'https://linkedin.com/in/yashsharma', 
+                    '', 
+                    '#', 
+                    'Motivated B.Tech CSE student at NIT Delhi with keen interest in Machine Learning, Computer Networks, and Full-Stack Web Development (MERN stack). Passionate about building innovative solutions and solving complex problems through technology. Seeking opportunities to apply and expand my technical skills in real-world projects while contributing to cutting-edge developments in AI, networking, and cybersecurity.'
+                );
 
                 INSERT INTO skills (name, category) VALUES 
-                ('JavaScript', 'Frontend'),
-                ('React', 'Frontend'),
-                ('Node.js', 'Backend'),
-                ('Python', 'Backend'),
-                ('SQL', 'Database');
+                ('C', 'Programming Languages'),
+                ('C++', 'Programming Languages'),
+                ('JavaScript', 'Programming Languages'),
+                ('Python', 'Programming Languages'),
+                ('Bash scripting', 'Programming Languages'),
+                ('HTML', 'Web Development'),
+                ('CSS3', 'Web Development'),
+                ('React', 'Web Development'),
+                ('Node.js', 'Web Development'),
+                ('Express.js', 'Web Development'),
+                ('MySQL', 'Database'),
+                ('MongoDB', 'Database'),
+                ('Pandas', 'Libraries/Frameworks'),
+                ('Matplotlib', 'Libraries/Frameworks'),
+                ('Scikit-learn', 'Libraries/Frameworks'),
+                ('NumPy', 'Libraries/Frameworks'),
+                ('Seaborn', 'Libraries/Frameworks'),
+                ('TensorFlow', 'Libraries/Frameworks'),
+                ('Git', 'Tools'),
+                ('GitHub', 'Tools'),
+                ('Cisco Packet Tracer', 'Tools'),
+                ('Linux', 'Tools'),
+                ('VS Code', 'Tools');
 
                 INSERT INTO projects (title, description, link, skills_used) VALUES 
-                ('Me-API Playground', 'A personal API playground to showcase profile data.', 'https://github.com/antigravity/me-api', 'Node.js, SQLite, React'),
-                ('RAG Chatbot', 'A retrieval augmented generation chatbot.', 'https://github.com/antigravity/rag-bot', 'Python, LangChain, Pinecone');
+                ('Portfolio', 'portfolio designed according to the requirement', 'https://github.com/YashSharma27-dev/Portfolio', 'HTML, CSS'),
+                ('Mess-food-suggestion-system-with-ML-', 'Developed an ML-based system that predicts optimal food intake.', 'https://github.com/YashSharma27-dev/Mess-food-suggestion-system-with-ML-', 'Python, machine-learning'),
+                ('hackathon_model', 'Model for smart code web hackathon', 'https://github.com/YashSharma27-dev/hackathon_model', 'HTML'),
+                ('Dask', '', 'https://github.com/YashSharma27-dev/Dask', ''),
+                ('SelfLibrary', 'self library design', 'https://github.com/YashSharma27-dev/SelfLibrary', 'CSS'),
+                ('TicTacToeGame', '', 'https://github.com/YashSharma27-dev/TicTacToeGame', 'CSS'),
+                ('RockPaperScissorGame', '', 'https://github.com/YashSharma27-dev/RockPaperScissorGame', 'JavaScript'),
+                ('PasswordGenerator', '', 'https://github.com/YashSharma27-dev/PasswordGenerator', 'HTML'),
+                ('whatsappClone', '', 'https://github.com/YashSharma27-dev/whatsappClone', 'CSS'),
+                ('LayersClone', 'the website is desing clone of the layers webiste front page....', 'https://github.com/YashSharma27-dev/LayersClone', 'HTML'),
+                ('PaytmClone', 'a responsive desingn paytm', 'https://github.com/YashSharma27-dev/PaytmClone', 'HTML'),
+                ('javascript-exercises', '', 'https://github.com/YashSharma27-dev/javascript-exercises', 'JavaScript');
 
                 INSERT INTO education (institution, degree, year) VALUES 
-                ('DeepMind Academy', 'MSc in Artificial Intelligence', '2023');
+                ('National Institute of Technology (NIT), Delhi', 'Bachelor of Technology in Computer Science and Engineering', '2023 - Present'),
+                ('Rajkiya Pratibha Vikas Vidhalaya, Gandhi Nagar, Delhi', 'Class XII - Secured 93% in CBSE Board Examinations', '2020-2022'),
+                ('Rajkiya Sarvodaya Bal Vidyalaya, Gandhi Nagar, Delhi', 'Class X - Secured 88% in CBSE Board Examinations', '2020');
 
                 INSERT INTO work (company, role, duration, description) VALUES 
-                ('Google DeepMind', 'AI Agent', '2023-Present', 'Helping users build cool software.');
+                ('Home Tutor', 'Tutor', 'Jan 2024 - Present', 'Teaching high school Math and Science to 3+ students.');
+
+                INSERT INTO achievements (title, description) VALUES
+                ('LeetCode', 'Solved 100+ coding problems, demonstrating strong problem-solving skills in Data Structures and Algorithms'),
+                ('Smart Code Web 1.0 Hackathon', 'Participated in Smart Code Web 1.0 Hackathon, gaining hands-on experience in web development and collaborative problem-solving.');
+
+                INSERT INTO certifications (title, issuer, status) VALUES
+                ('IBM AI Engineering Professional Certificate', 'Coursera', 'In Progress');
             `;
             db.exec(seedQuery, (err) => {
                 if (err) console.error('Error seeding data:', err.message);

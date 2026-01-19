@@ -32,21 +32,23 @@ A personal API playground to showcase a candidate profile, skills, and projects.
 - Node.js (v16+)
 - npm
 
-### 1. Backend Setup
-```bash
-cd backend
-npm install
-node server.js
-```
-The server will start on `http://localhost:3000`. The database will be automatically created and seeded on the first run.
+### Quick Start (Single Command)
 
-### 2. Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-The frontend will start on `http://localhost:5173`.
+1.  **Install Dependencies**
+    ```bash
+    npm install
+    npm run install-all
+    ```
+
+2.  **Run Application**
+    ```bash
+    npm start
+    ```
+    This will start both the backend (http://localhost:3000) and frontend (http://localhost:5173) concurrently.
+
+### Manual Setup (Alternative)
+
+#### 1. Backend Setup
 
 ## 📖 API Documentation
 

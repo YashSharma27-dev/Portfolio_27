@@ -108,7 +108,17 @@ app.get('/skills/top', async (req, res) => {
     }
 });
 
-// 5. Work
+// 5. Education
+app.get('/education', async (req, res) => {
+    try {
+        const rows = await query('SELECT * FROM education');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 6. Work
 app.get('/work', async (req, res) => {
     try {
         const rows = await query('SELECT * FROM work');
@@ -118,7 +128,27 @@ app.get('/work', async (req, res) => {
     }
 });
 
-// 6. Search (generic search across projects and skills)
+// 6. Achievements
+app.get('/achievements', async (req, res) => {
+    try {
+        const rows = await query('SELECT * FROM achievements');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 7. Certifications
+app.get('/certifications', async (req, res) => {
+    try {
+        const rows = await query('SELECT * FROM certifications');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 8. Search (generic search across projects and skills)
 app.get('/search', async (req, res) => {
     const { q } = req.query;
     if (!q) return res.json({ projects: [], skills: [] });

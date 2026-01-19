@@ -5,7 +5,10 @@ function App() {
   const [profile, setProfile] = useState(null);
   const [projects, setProjects] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [education, setEducation] = useState([]);
   const [work, setWork] = useState([]);
+  const [achievements, setAchievements] = useState([]);
+  const [certifications, setCertifications] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const [health, setHealth] = useState(null);
@@ -14,18 +17,24 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [profileRes, projectsRes, skillsRes, workRes, healthRes] = await Promise.all([
+        const [profileRes, projectsRes, skillsRes, eduRes, workRes, achieveRes, certRes, healthRes] = await Promise.all([
           api.getProfile(),
           api.getProjects(),
           api.getSkills(),
+          api.getEducation(),
           api.getWork(),
+          api.getAchievements(),
+          api.getCertifications(),
           api.checkHealth()
         ]);
 
         setProfile(profileRes.data);
         setProjects(projectsRes.data);
         setSkills(skillsRes.data);
+        setEducation(eduRes.data);
         setWork(workRes.data);
+        setAchievements(achieveRes.data);
+        setCertifications(certRes.data);
         setHealth(healthRes.data.status);
       } catch (err) {
         console.error("Failed to fetch data", err);
@@ -51,7 +60,7 @@ function App() {
   const filterBySkill = async (skillName) => {
     setSearchQuery(`Skill: ${skillName}`);
     const res = await api.getProjects(skillName);
-    setSearchResults({ projects: res.data, skills: [] }); // formatting to match search result structure or just overriding view
+    setSearchResults({ projects: res.data, skills: [] });
   };
 
   if (loading) {
@@ -72,7 +81,7 @@ function App() {
     <div className="App">
       <header className="header">
         <div className="container nav">
-          <div className="logo">Me-API Playground <span style={{ fontSize: '0.5em', color: 'var(--text-secondary)' }}>v1.0</span></div>
+          <div className="logo">Yash Sharma <span style={{ fontSize: '0.5em', color: 'var(--text-secondary)' }}>Portfolio</span></div>
           <div className={`status-badge ${health === 'ok' ? '' : 'error'}`}>
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'currentColor' }} />
             API: {health === 'ok' ? 'Online' : 'Offline'}
@@ -88,11 +97,13 @@ function App() {
               <div>
                 <h1>{profile.name}</h1>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', marginBottom: '1rem' }}>{profile.bio}</p>
+                {profile.phone && <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>📞 {profile.phone}</p>}
+                {profile.email && <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>✉️ {profile.email}</p>}
+
                 <div style={{ display: 'flex', gap: '1rem' }}>
                   {profile.github && <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>}
                   {profile.linkedin && <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}
                   {profile.portfolio && <a href={profile.portfolio} target="_blank" rel="noreferrer">Portfolio</a>}
-                  {profile.resume && <a href={profile.resume} className="btn btn-primary" target="_blank" rel="noreferrer">Resume</a>}
                 </div>
               </div>
             </div>
@@ -142,10 +153,26 @@ function App() {
           {displayProjects.length === 0 && <p style={{ color: 'var(--text-secondary)' }}>No projects found.</p>}
         </div>
 
-        {/* Work Section */}
+        {/* Education Section (New) */}
         {!searchResults && (
           <>
-            <div className="section-title"><h3>Experience</h3></div>
+            <div className="section-title"><h3>Education</h3></div>
+            <div className="grid">
+              {education.map((edu, i) => (
+                <div key={edu.id || i} className="card">
+                  <h4>{edu.institution}</h4>
+                  <div style={{ color: 'var(--accent-color)', marginBottom: '0.5rem' }}>{edu.degree}</div>
+                  <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{edu.year}</div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Work / Experience Section */}
+        {!searchResults && (
+          <>
+            <div className="section-title"><h3>Experience & Activities</h3></div>
             <div className="grid">
               {work.map((job, i) => (
                 <div key={job.id || i} className="card">
@@ -153,6 +180,29 @@ function App() {
                   <div style={{ color: 'var(--accent-color)', marginBottom: '0.5rem' }}>{job.company}</div>
                   <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' }}>{job.duration}</div>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{job.description}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Achievements */}
+            <div className="section-title"><h3>Achievements</h3></div>
+            <div className="grid">
+              {achievements.map((item, i) => (
+                <div key={item.id || i} className="card">
+                  <h4>{item.title}</h4>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{item.description}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Certifications */}
+            <div className="section-title"><h3>Certifications</h3></div>
+            <div className="grid">
+              {certifications.map((item, i) => (
+                <div key={item.id || i} className="card">
+                  <h4>{item.title}</h4>
+                  <div style={{ color: 'var(--accent-color)', marginBottom: '0.5rem' }}>{item.issuer}</div>
+                  <div className="tag" style={{ background: 'rgba(56, 189, 248, 0.1)', color: 'var(--accent-color)' }}>{item.status}</div>
                 </div>
               ))}
             </div>

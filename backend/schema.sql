@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS profile (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     email TEXT NOT NULL,
+    phone TEXT,
     github TEXT,
     linkedin TEXT,
     portfolio TEXT,
@@ -29,7 +30,7 @@ CREATE TABLE IF NOT EXISTS projects (
     title TEXT NOT NULL,
     description TEXT,
     link TEXT,
-    skills_used TEXT -- Comma separated or JSON string
+    skills_used TEXT
 );
 
 CREATE TABLE IF NOT EXISTS work (
@@ -38,4 +39,17 @@ CREATE TABLE IF NOT EXISTS work (
     role TEXT NOT NULL,
     duration TEXT,
     description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS achievements (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS certifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    issuer TEXT,
+    status TEXT
 );
