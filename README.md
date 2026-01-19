@@ -1,3 +1,4 @@
+
 # Me-API Playground
 
 A personal API playground to showcase a candidate profile, skills, and projects. This project consists of a Node.js/Express backend with SQLite and a React frontend.
@@ -123,3 +124,4 @@ CREATE TABLE work (
 2. Connect repo.
 3. Set build command: `npm run build`
 4. Set output directory: `dist`
+
