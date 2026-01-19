@@ -170,7 +170,7 @@ app.get('/search', async (req, res) => {
 });
 
 // Anything that doesn't match the above, send back index.html
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
