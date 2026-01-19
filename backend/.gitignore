@@ -1,0 +1,4 @@
+node_modules/
+me_api.db
+.env
+.DS_Store
