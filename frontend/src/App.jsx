@@ -17,7 +17,10 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [profileRes, projectsRes, skillsRes, eduRes, workRes, achieveRes, certRes, healthRes] = await Promise.all([
+        setLoading(true);
+
+        // Fetch all data in parallel
+        const results = await Promise.allSettled([
           api.getProfile(),
           api.getProjects(),
           api.getSkills(),
@@ -28,16 +31,24 @@ function App() {
           api.checkHealth()
         ]);
 
-        setProfile(profileRes.data);
-        setProjects(projectsRes.data);
-        setSkills(skillsRes.data);
-        setEducation(eduRes.data);
-        setWork(workRes.data);
-        setAchievements(achieveRes.data);
-        setCertifications(certRes.data);
-        setHealth(healthRes.data.status);
+        // Map results if successful, otherwise keep defaults
+        if (results[0].status === 'fulfilled') setProfile(results[0].value.data);
+        if (results[1].status === 'fulfilled') setProjects(results[1].value.data);
+        if (results[2].status === 'fulfilled') setSkills(results[2].value.data);
+        if (results[3].status === 'fulfilled') setEducation(results[3].value.data);
+        if (results[4].status === 'fulfilled') setWork(results[4].value.data);
+        if (results[5].status === 'fulfilled') setAchievements(results[5].value.data);
+        if (results[6].status === 'fulfilled') setCertifications(results[6].value.data);
+
+        // Final health check
+        if (results[7].status === 'fulfilled') {
+          setHealth(results[7].value.data.status);
+        } else {
+          setHealth('error');
+        }
+
       } catch (err) {
-        console.error("Failed to fetch data", err);
+        console.error("Critical failure during fetch", err);
         setHealth('error');
       } finally {
         setLoading(false);
