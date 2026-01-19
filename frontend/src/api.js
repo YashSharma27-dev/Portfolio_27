@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export const getProfile = () => axios.get(`${API_URL}/profile`);
 export const getProjects = (skill) => axios.get(`${API_URL}/projects`, { params: { skill } });
